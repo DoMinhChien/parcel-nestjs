@@ -8,7 +8,7 @@ export class UserEntity {
 
   @Column('varchar', { length: 500 })
   email: string;
-  @Column('varchar', { name: 'display_name', length: 64 })
+  @Column('varchar', {  length: 64 })
   displayName: string;
   @Column('varchar', {  length: 64 })
   password: string;
@@ -17,7 +17,7 @@ export class UserEntity {
   @Column('varchar', {  length: 64 })
   phone: string;
   @Column('varchar', { })
-  provincedCode: string;
+  provinceCode: string;
   @Column('int', { default: 0 })
   gender: number;
 
