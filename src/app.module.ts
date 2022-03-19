@@ -5,9 +5,16 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './shared/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
+import * as Joi from '@hapi/joi';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [UserModule,
-     ConfigModule.forRoot({isGlobal: true}),
+     ConfigModule.forRoot({isGlobal: true,
+      validationSchema: Joi.object({
+        //...
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION_TIME: Joi.string().required(),
+      })}),
      TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -18,7 +25,8 @@ import { UserModule } from './user/user.module';
       autoLoadEntities: true,
       synchronize: true, // shouldn't be used in production - may lose data
 
-     })
+     }),
+     AuthModule
     ],
   controllers: [AppController],
   providers: [AppService],

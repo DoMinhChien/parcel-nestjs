@@ -9,41 +9,56 @@ import { UserEntity } from './entities/user.entity';
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    private usersRepository: Repository<UserEntity>,
   ) {}
-    async create(user: CreateUserDto) {
+    async createuser(user: CreateUserDto) {
       try {
-        const newUser = this.userRepository.create(user);
-        await this.userRepository.save(newUser);
+        const newUser = this.usersRepository.create(user);
+        await this.usersRepository.save(newUser);
         return newUser;
       } catch (e) {
         console.error(e)
         return null;
       }
     }
-
+    async create(userData: CreateUserDto) {
+   //  const stripeCustomer = await this.stripeService.createCustomer(userData.name, userData.email);
+  
+      const newUser = await this.usersRepository.create({
+        ...userData,
+       // stripeCustomerId: stripeCustomer.id
+      });
+      await this.usersRepository.save(newUser);
+      return newUser;
+    }
     getAllUsers() {
-      return this.userRepository.find();
+      return this.usersRepository.find();
     }
 
     async getUserById(id: string) {
-      const user = await this.userRepository.findOne(id);
+      const user = await this.usersRepository.findOne(id);
       return user ? user : null;
     }
   
 
     async updateUser(id: string, user: UpdateUserDto) {
-      await this.userRepository.update(id, user);
-      const updatedUser = await this.userRepository.findOne(id);
+      await this.usersRepository.update(id, user);
+      const updatedUser = await this.usersRepository.findOne(id);
       if (updatedUser) {
         return updatedUser;
       }
   
       throw new HttpException('user not found', HttpStatus.NOT_FOUND);
     }
-  
+    async getByEmail(email: string) {
+      const user = await this.usersRepository.findOne({ email });
+      if (user) {
+        return user;
+      }
+      throw new HttpException('User with this email does not exist', HttpStatus.NOT_FOUND);
+    }
     async deleteUser(id: number) {
-      const deletedUser = await this.userRepository.delete(id);
+      const deletedUser = await this.usersRepository.delete(id);
       if (!deletedUser.affected) {
         throw new HttpException('user not found', HttpStatus.NOT_FOUND);
       }
