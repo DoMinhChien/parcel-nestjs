@@ -20,15 +20,14 @@ export class AuthController {
   @Post('log-in')
   async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) {
     const {user} = request;
-    const cookie = this.authService.getCookieWithJwtToken(user.id);
-    response.setHeader('Set-Cookie', cookie);
-    user.password = undefined;
-    return response.send(user);
+    const token = this.authService.getJwtToken(user.id);
+    var result = response.send(token);
+    return result;
   }
   @UseGuards(JwtAuthenticationGuard)
   @Post('log-out')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
-    response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
+    //response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
     return response.sendStatus(200);
   }
 

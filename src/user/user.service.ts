@@ -4,26 +4,18 @@ import { Repository } from 'typeorm/repository/Repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private usersRepository: Repository<UserEntity>,
   ) {}
-    async createuser(user: CreateUserDto) {
-      try {
-        const newUser = this.usersRepository.create(user);
-        await this.usersRepository.save(newUser);
-        return newUser;
-      } catch (e) {
-        console.error(e)
-        return null;
-      }
-    }
+  
     async create(userData: CreateUserDto) {
    //  const stripeCustomer = await this.stripeService.createCustomer(userData.name, userData.email);
   
+   userData.id = uuidv4();
       const newUser = await this.usersRepository.create({
         ...userData,
        // stripeCustomerId: stripeCustomer.id
