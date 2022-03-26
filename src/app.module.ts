@@ -11,7 +11,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [UserModule,
      ConfigModule.forRoot({isGlobal: true,
       validationSchema: Joi.object({
-        //...
+        // //...
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
       })}),

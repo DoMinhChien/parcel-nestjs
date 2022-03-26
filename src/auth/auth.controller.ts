@@ -7,6 +7,7 @@ import {Response} from 'express';
 import JwtAuthenticationGuard from './jwt-authentication.guard';
 
 import {LogInDto} from './dto/login.dto';
+import { LoginResponse } from './dto/login.response';
 @Controller('authentication')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -21,7 +22,8 @@ export class AuthController {
   async logIn(@Body() loginDto: LogInDto, @Req() request: RequestWithUser, @Res() response: Response) {
     const {user} = request;
     const token = this.authService.getJwtToken(user.id);
-    var result = response.send(token);
+    var loginResponse = new LoginResponse(token)
+    var result = response.send(loginResponse);
     return result;
   }
   @UseGuards(JwtAuthenticationGuard)
