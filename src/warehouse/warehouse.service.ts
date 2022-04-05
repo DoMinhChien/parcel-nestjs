@@ -13,14 +13,13 @@ export class WarehouseService {
     private warehousesRepository: Repository<WarehouseEntity>,
   ) {}
   
-    async create(userData: CreateWarehouseDto) {
-      userData.id = uuidv4();
-      const newUser = await this.warehousesRepository.create({
-        ...userData,
-       // stripeCustomerId: stripeCustomer.id
+    async create(warehouseData: CreateWarehouseDto) {
+      warehouseData.id = uuidv4();
+      const newWarehouse = await this.warehousesRepository.create({
+        ...warehouseData,
       });
-      await this.warehousesRepository.save(newUser);
-      return newUser;
+      await this.warehousesRepository.save(newWarehouse);
+      return newWarehouse;
     }
     
     async getAllWarehouses() {
@@ -29,24 +28,24 @@ export class WarehouseService {
     }
 
     async getWarehouseById(id: string) {
-      const user = await this.warehousesRepository.findOne(id);
-      return user ? user : null;
+      const warehouse = await this.warehousesRepository.findOne(id);
+      return warehouse ? warehouse : null;
     }
   
-    async updateWarehouse(id: string, user: UpdateWarehouseDto) {
-      await this.warehousesRepository.update(id, user);
-      const updatedUser = await this.warehousesRepository.findOne(id);
-      if (updatedUser) {
-        return updatedUser;
+    async updateWarehouse(id: string, warehouse: UpdateWarehouseDto) {
+      await this.warehousesRepository.update(id, warehouse);
+      const updatedWarehouse = await this.warehousesRepository.findOne(id);
+      if (updatedWarehouse) {
+        return updatedWarehouse;
       }
   
-      throw new HttpException('user not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('warehouse not found', HttpStatus.NOT_FOUND);
     }
 
     async deleteWarehouse(id: number) {
-      const deletedUser = await this.warehousesRepository.delete(id);
-      if (!deletedUser.affected) {
-        throw new HttpException('user not found', HttpStatus.NOT_FOUND);
+      const deletedWarehouse = await this.warehousesRepository.delete(id);
+      if (!deletedWarehouse.affected) {
+        throw new HttpException('warehouse not found', HttpStatus.NOT_FOUND);
       }
     }
 }

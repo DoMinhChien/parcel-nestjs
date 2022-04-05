@@ -14,17 +14,3 @@ export class WarehouseEntity {
   @OneToMany(() => OrderEntity, order => order.destWarehouse)
   destOrders: OrderEntity[];
 }
-
-// @Entity()
-// export class OrderToSrcWarehouse {
-//     @PrimaryColumn({ unique: true })
-//     id: string;
-//     @Column()
-//     public orderId!: string;
-//     @Column()
-//     public warehouseId!: string;
-//     @ManyToOne(() => OrderEntity, order => order.orderToSrcWarehouse)
-//     public post!: Post;
-//     @ManyToOne(() => Category, category => category.postToCategories)
-//     public category!: Category;
-// }
