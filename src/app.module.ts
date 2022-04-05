@@ -8,10 +8,12 @@ import { UserModule } from './user/user.module';
 import * as Joi from '@hapi/joi';
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
+import { WarehouseModule } from './warehouse/warehouse.module';
 @Module({
   imports: [
     UserModule,
     OrderModule,
+    WarehouseModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
