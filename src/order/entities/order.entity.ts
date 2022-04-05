@@ -1,3 +1,4 @@
+import { WarehouseEntity } from 'src/warehouse/entities/warehouse.entity';
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { UserEntity } from "../../user/entities/user.entity";
 import { SubOrderEntity } from './suborder.entity';
@@ -35,4 +36,8 @@ export class OrderEntity {
   value: number;
   @OneToMany(() => SubOrderEntity, subOrder => subOrder.order)
   subOrders: SubOrderEntity[];
+  @ManyToOne(() => WarehouseEntity, warehouse => warehouse.srcOrders)
+  srcWarehouse: WarehouseEntity;
+  @ManyToOne(() => WarehouseEntity, warehouse => warehouse.destOrders)
+  destWarehouse: WarehouseEntity;
 }
