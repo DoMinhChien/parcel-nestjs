@@ -9,29 +9,29 @@ export class WarehouseController {
   constructor(private readonly warehouseService: WarehouseService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateWarehouseDto) {
-    const result = await this.warehouseService.create(createUserDto);
+  async create(@Body() createWarehouseDto: CreateWarehouseDto) {
+    const result = await this.warehouseService.create(createWarehouseDto);
     return result;
   }
 
   @Get()
-  getUsers() {
+  getWarehouses() {
     return this.warehouseService.getAllWarehouses();
   }
 
   @Get(':id')
-  getUserById(@Param('id') id: string) {
+  getWarehouseById(@Param('id') id: string) {
     return this.warehouseService.getWarehouseById(id);
   }
 
   @Patch(':id')
-  async updatePost(@Param('id') id: string, @Body() user: UpdateWarehouseDto) {
-    return this.warehouseService.updateWarehouse(id, user);
+  async updateWarehouse(@Param('id') id: string, @Body() warehouse: UpdateWarehouseDto) {
+    return this.warehouseService.updateWarehouse(id, warehouse);
   }
 
-  //delete user
+  //delete warehouse
   @Delete(':id')
-  async deleteUser(@Param('id') id: string) {
+  async deleteWarehouse(@Param('id') id: string) {
     this.warehouseService.deleteWarehouse(Number(id));
   }
 }
