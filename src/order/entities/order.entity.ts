@@ -1,6 +1,16 @@
 import { WarehouseEntity } from 'src/warehouse/entities/warehouse.entity';
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany, JoinTable, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
-import { UserEntity } from "../../user/entities/user.entity";
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+} from 'typeorm';
+import { UserEntity } from '../../user/entities/user.entity';
 import { SubOrderEntity } from './suborder.entity';
 
 @Entity('order')
@@ -20,24 +30,31 @@ export class OrderEntity {
   isDirectDelivery: boolean;
   @Column('varchar', { length: 500 })
   description: string;
-  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
   createdAt: Date;
-  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
   updatedAt: Date;
   @Column('boolean', { default: false })
   paymentSide: boolean;
   @Column('int', { default: 0 })
   paymentStatus: number;
-  @Column("decimal", { precision: 5, scale: 2 })
-  totalWeight : number;
-  @ManyToOne(() => UserEntity, user => user.orders)
+  @Column('decimal', { precision: 5, scale: 2 })
+  totalWeight: number;
+  @ManyToOne(() => UserEntity, (user) => user.orders)
   user: UserEntity;
   @Column('int', { default: 0 })
   value: number;
-  @OneToMany(() => SubOrderEntity, subOrder => subOrder.order)
+  @OneToMany(() => SubOrderEntity, (subOrder) => subOrder.order)
   subOrders: SubOrderEntity[];
-  @ManyToOne(() => WarehouseEntity, warehouse => warehouse.srcOrders)
+  @ManyToOne(() => WarehouseEntity, (warehouse) => warehouse.srcOrders)
   srcWarehouse: WarehouseEntity;
-  @ManyToOne(() => WarehouseEntity, warehouse => warehouse.destOrders)
+  @ManyToOne(() => WarehouseEntity, (warehouse) => warehouse.destOrders)
   destWarehouse: WarehouseEntity;
 }

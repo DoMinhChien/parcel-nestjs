@@ -1,26 +1,21 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { LoggerMiddleware } from './shared/middleware/logger.middleware';
-import { UserModule } from './user/user.module';
 import * as Joi from '@hapi/joi';
+
 import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
+import { LoggerMiddleware } from './shared/middleware/logger.middleware';
+import { UserModule } from './user/user.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
 @Module({
   imports: [
-    UserModule,
-    OrderModule,
-    WarehouseModule,
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-        // //...
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION_TIME: Joi.string().required(),
-      })
+      }),
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -31,15 +26,15 @@ import { WarehouseModule } from './warehouse/warehouse.module';
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
       synchronize: true, // shouldn't be used in production - may lose data
-
     }),
-    AuthModule
+    AuthModule,
+    OrderModule,
+    UserModule,
+    WarehouseModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware)
+    consumer.apply(LoggerMiddleware);
   }
 }
