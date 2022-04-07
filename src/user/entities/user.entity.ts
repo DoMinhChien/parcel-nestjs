@@ -1,7 +1,7 @@
 import { OrderEntity } from '../../order/entities/order.entity';
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany } from 'typeorm';
 import { Exclude } from 'class-transformer';
- 
+
 @Entity('user')
 export class UserEntity {
   @PrimaryColumn({ unique: true })
@@ -24,9 +24,7 @@ export class UserEntity {
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
 
-  @Column({
-    nullable: true
-  })
+  @Column({ nullable: true })
   @Exclude()
   public currentHashedRefreshToken?: string;
 }

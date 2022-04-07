@@ -1,4 +1,3 @@
-import { WarehouseEntity } from '../../warehouse/entities/warehouse.entity';
 import {
   Entity,
   Column,
@@ -11,7 +10,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { UserEntity } from '../../user/entities/user.entity';
-import { SubOrderEntity } from './suborder.entity';
+import { WarehouseEntity } from '../../warehouse/entities/warehouse.entity';
+import { SubOrderEntity } from './sub-order.entity';
 
 @Entity('order')
 export class OrderEntity {
