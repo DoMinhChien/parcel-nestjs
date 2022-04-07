@@ -17,10 +17,13 @@ import JwtAuthenticationGuard from './jwt-authentication.guard';
 
 import { LogInDto } from './dto/login.dto';
 import { LoginResponse } from './dto/login.response';
+import JwtRefreshGuard from './jwt-refresh.guards';
+import { UserService } from 'src/user/user.service';
 
 @Controller('authentication')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService,
+    private readonly userService : UserService) {}
 
   @Post('register')
   async register(@Body() registrationData: RegisterDto) {
@@ -37,7 +40,8 @@ export class AuthController {
   ) {
     const { user } = request;
     const token = this.authService.getJwtToken(user.id);
-    var loginResponse = new LoginResponse(token);
+    const refreshToken = this.authService.getJwtRefreshToken(user.id);
+    var loginResponse = new LoginResponse(token,refreshToken);
     var result = response.send(loginResponse);
     return result;
   }
@@ -45,6 +49,8 @@ export class AuthController {
   @UseGuards(JwtAuthenticationGuard)
   @Post('log-out')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
+    
+    await this.userService.removeRefreshToken(request.user.id);
     return response.sendStatus(200);
   }
 
@@ -55,4 +61,14 @@ export class AuthController {
     user.password = undefined;
     return user;
   }
+
+  @UseGuards(JwtRefreshGuard)
+  @Get('refresh')
+  refresh(@Req() request: RequestWithUser) {
+   const accessTokenCookie = this.authService.getJwtRefreshToken(request.user.id);
+ 
+    request.res.setHeader('Set-Cookie', accessTokenCookie);
+    return request.user;
+  }
+  
 }
