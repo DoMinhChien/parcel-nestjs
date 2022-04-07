@@ -8,7 +8,8 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { LocalStrategy } from './local.strategy';
 @Module({
-  imports: [UserModule,
+  imports: [
+    UserModule,
     PassportModule,
     ConfigModule,
     JwtModule.registerAsync({
@@ -20,8 +21,9 @@ import { LocalStrategy } from './local.strategy';
           expiresIn: `${configService.get('JWT_EXPIRATION_TIME')}s`,
         },
       }),
-    }),],
+    }),
+  ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy,JwtStrategy]
+  providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}

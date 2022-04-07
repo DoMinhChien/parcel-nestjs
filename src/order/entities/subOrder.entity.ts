@@ -7,10 +7,10 @@ export class SubOrderEntity {
   id: string;
   @Column('varchar', { length: 500 })
   status: string;
-  @Column('varchar', {  length: 64 })
+  @Column('varchar', { length: 64 })
   name: string;
-  @Column('int', {  default: 0 })
+  @Column('int', { default: 0 })
   weight: number;
-  @ManyToOne(() => OrderEntity, order => order.subOrders)
+  @ManyToOne(() => OrderEntity, (order) => order.subOrders)
   order: OrderEntity;
 }

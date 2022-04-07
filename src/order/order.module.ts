@@ -5,8 +5,8 @@ import { SubOrderEntity } from './entities/suborder.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([OrderEntity, SubOrderEntity])],
-//   controllers: [UserController],
-//   providers: [UserService],
-//   exports: [UserService]
+  //   controllers: [UserController],
+  //   providers: [UserService],
+  //   exports: [UserService]
 })
 export class OrderModule {}
