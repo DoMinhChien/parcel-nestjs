@@ -42,7 +42,7 @@ export class AuthService {
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
       const user = await this.usersService.getByEmail(email);
-      // await this.verifyPassword(plainTextPassword, user.password);
+       await this.verifyPassword(plainTextPassword, user.password);
       user.password = undefined;
       return user;
     } catch (error) {
@@ -87,4 +87,14 @@ export class AuthService {
 
     return token;
   }
+
+  public getJwtRefreshToken(userId: string) {
+    const payload: TokenPayload = { userId };
+    const token = this.jwtService.sign(payload, {
+      secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
+      expiresIn: `${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`
+    });
+    return  token;
+  }
+  
 }

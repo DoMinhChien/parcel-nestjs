@@ -1,4 +1,4 @@
-import { WarehouseEntity } from 'src/warehouse/entities/warehouse.entity';
+import { WarehouseEntity } from '../../warehouse/entities/warehouse.entity';
 import {
   Entity,
   Column,
