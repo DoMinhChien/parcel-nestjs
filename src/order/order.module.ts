@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderEntity } from './entities/order.entity';
-import { SubOrderEntity } from './entities/suborder.entity';
+import { SubOrderEntity } from './entities/sub-order.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([OrderEntity, SubOrderEntity])],
