@@ -28,7 +28,7 @@ export class DriverController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.driverService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.driverService.delete(+id);
   }
 }

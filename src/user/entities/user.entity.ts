@@ -1,6 +1,7 @@
 import { OrderEntity } from '../../order/entities/order.entity';
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany, OneToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { DriverEntity } from 'src/driver/entities/driver.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -23,8 +24,9 @@ export class UserEntity {
   gender: number;
   @OneToMany(() => OrderEntity, (order) => order.user)
   orders: OrderEntity[];
-
   @Column({ nullable: true })
   @Exclude()
   public currentHashedRefreshToken?: string;
+  @OneToOne(() => DriverEntity, driver => driver.user) // specify inverse side as a second parameter
+  driver: DriverEntity;
 }

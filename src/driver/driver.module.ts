@@ -10,6 +10,7 @@ import { VehicleEntity } from './entities/vehicle.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([DriverEntity, VehicleEntity])],
   controllers: [DriverController, VehicleController],
-  providers: [DriverService, VehicleService]
+  providers: [DriverService, VehicleService],
+  exports: [DriverService, VehicleService]
 })
 export class DriverModule {}
