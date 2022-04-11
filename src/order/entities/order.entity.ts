@@ -1,3 +1,4 @@
+import { DriverEntity } from 'src/driver/entities/driver.entity';
 import {
   Entity,
   Column,
@@ -8,6 +9,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '../../user/entities/user.entity';
 import { WarehouseEntity } from '../../warehouse/entities/warehouse.entity';
@@ -19,9 +21,9 @@ export class OrderEntity {
   id: string;
   @Column('int', { default: 0 })
   status: number;
-  @ManyToMany(() => UserEntity)
+  @ManyToMany(() => DriverEntity)
   @JoinTable()
-  drivers: UserEntity[];
+  drivers: DriverEntity[];
   @Column('int', { default: 0 })
   fee: number;
   @Column('boolean', { default: false })
@@ -47,14 +49,23 @@ export class OrderEntity {
   paymentStatus: number;
   @Column('decimal', { precision: 5, scale: 2 })
   totalWeight: number;
+  @Column()
+  userId: string;
   @ManyToOne(() => UserEntity, (user) => user.orders)
+  @JoinColumn({name: "userId"})
   user: UserEntity;
   @Column('int', { default: 0 })
   value: number;
   @OneToMany(() => SubOrderEntity, (subOrder) => subOrder.order)
   subOrders: SubOrderEntity[];
+  @Column()
+  srcWarehouseId: string;
   @ManyToOne(() => WarehouseEntity, (warehouse) => warehouse.srcOrders)
+  @JoinColumn({name: "srcWarehouseId"})
   srcWarehouse: WarehouseEntity;
+  @Column()
+  destWarehouseId: string;
   @ManyToOne(() => WarehouseEntity, (warehouse) => warehouse.destOrders)
+  @JoinColumn({name: "destWarehouseId"})
   destWarehouse: WarehouseEntity;
 }
