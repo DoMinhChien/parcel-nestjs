@@ -18,7 +18,7 @@ import JwtAuthenticationGuard from './jwt-authentication.guard';
 import { LogInDto } from './dto/login.dto';
 import { LoginResponse } from './dto/login.response';
 import JwtRefreshGuard from './jwt-refresh.guards';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 
 @Controller('authentication')
 export class AuthController {
