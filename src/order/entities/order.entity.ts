@@ -1,4 +1,4 @@
-import { DriverEntity } from 'src/driver/entities/driver.entity';
+import { DriverEntity } from '../../driver/entities/driver.entity';
 import {
   Entity,
   Column,

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DriverModule } from 'src/driver/driver.module';
+import { DriverModule } from '../driver/driver.module';
 import { OrderEntity } from './entities/order.entity';
 import { SubOrderEntity } from './entities/sub-order.entity';
 import { OrderController, SubOrderController } from './order.controller';

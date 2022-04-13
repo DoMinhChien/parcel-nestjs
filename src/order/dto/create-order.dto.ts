@@ -1,5 +1,4 @@
-import { DriverEntity } from "src/driver/entities/driver.entity";
-import { UserEntity } from "src/user/entities/user.entity";
+import { DriverEntity } from "../../driver/entities/driver.entity";
 
 export class CreateOrderDto {
   public id: string;

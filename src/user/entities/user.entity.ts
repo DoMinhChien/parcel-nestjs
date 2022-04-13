@@ -1,7 +1,7 @@
 import { OrderEntity } from '../../order/entities/order.entity';
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany, OneToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { DriverEntity } from 'src/driver/entities/driver.entity';
+import { DriverEntity } from '../../driver/entities/driver.entity';
 
 @Entity('user')
 export class UserEntity {

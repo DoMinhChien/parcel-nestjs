@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject,  Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { CreateDriverDto } from './dto/create-driver.dto';
@@ -7,16 +7,20 @@ import { UpdateDriverDto } from './dto/update-driver.dto';
 import { VehicleEntity } from './entities/vehicle.entity';
 
 import { v4 as uuidv4 } from 'uuid';
-@Injectable()
+import { UserEntity } from 'src/user/entities/user.entity';
+import RequestWithUser from 'src/auth/requestWithUser.interface';
+
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
+@Injectable({ scope: Scope.REQUEST })
 export class VehicleService {
-  
+  currentUser: any;
   constructor(  @InjectRepository(VehicleEntity)
-  private vehicleRepository: Repository<VehicleEntity>) {
-    
+  private vehicleRepository: Repository<VehicleEntity>,
+  @Inject(REQUEST) private readonly request: Request) {
+    this.currentUser = request.user;
   }
   async create(vehicle: CreateVehicleDto) {
-      
-    //userData.id = uuidv4();
     const entity = this.vehicleRepository.create({
         id:uuidv4(),
         currentWeight: vehicle.currentWeight,
@@ -29,6 +33,7 @@ export class VehicleService {
   }
 
   getAllVehicles() {
+    console.log(this.currentUser);
     return this.vehicleRepository.find();
   }
 

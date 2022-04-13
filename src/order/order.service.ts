@@ -1,13 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DriverService } from '../driver/driver.service';
 import { Repository } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
 import { CreateOrderDto, CreateSubOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto, UpdateSubOrderDto } from './dto/update-order.dto';
-import { v4 as uuidv4 } from 'uuid';
 import { OrderEntity } from './entities/order.entity';
 import { SubOrderEntity } from './entities/sub-order.entity';
-import { DriverEntity } from 'src/driver/entities/driver.entity';
-import { DriverService } from 'src/driver/driver.service';
 
 @Injectable()
 export class OrderService {

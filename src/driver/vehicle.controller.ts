@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {LocalAuthenticationGuard }from '../auth/localAuthentication.guard';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
@@ -12,7 +13,7 @@ export class VehicleController {
   create(@Body() createDriverDto: CreateVehicleDto) {
     return this.vehicleService.create(createDriverDto);
   }
-
+  @UseGuards(LocalAuthenticationGuard)
   @Get()
   findAll() {
     return this.vehicleService.getAllVehicles();

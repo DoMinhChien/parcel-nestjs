@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm/repository/Repository';
 import { CreateDriverDto } from './dto/create-driver.dto';
@@ -7,13 +7,15 @@ import { UpdateDriverDto } from './dto/update-driver.dto';
 import { VehicleEntity } from './entities/vehicle.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { DriverEntity } from './entities/driver.entity';
-
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 @Injectable()
 export class DriverService {
   
   constructor(  @InjectRepository(DriverEntity)
-  private driverRepository: Repository<DriverEntity>) {
-    
+  private driverRepository: Repository<DriverEntity>,
+  @Inject(REQUEST) private readonly request: Request) {
+    request.user;
   }
   async create(driverData: CreateDriverDto) {
     driverData.id = uuidv4();
