@@ -1,7 +1,8 @@
 import { OrderEntity } from '../../order/entities/order.entity';
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, ManyToMany, OneToOne, JoinTable } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { DriverEntity } from '../../driver/entities/driver.entity';
+import { RoleEntity } from './role.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -27,6 +28,13 @@ export class UserEntity {
   @Column({ nullable: true })
   @Exclude()
   public currentHashedRefreshToken?: string;
+
   @OneToOne(() => DriverEntity, driver => driver.user) // specify inverse side as a second parameter
   driver: DriverEntity;
+
+  @ManyToMany(() => RoleEntity, (role : RoleEntity) => role.users)
+  @JoinTable()
+  public roles : RoleEntity[];
+  @Column('varchar', {length: 100, nullable: true}, )
+  location: string;
 }

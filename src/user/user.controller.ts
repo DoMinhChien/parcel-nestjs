@@ -1,14 +1,15 @@
 import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { BaseFilerDto } from 'src/shared/model/base.filter.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getUsers() {
-    return this.userService.getAllUsers();
+  getUsers(filter :BaseFilerDto) {
+    return this.userService.getAllUsers(filter);
   }
 
   @Get(':id')

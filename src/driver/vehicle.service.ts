@@ -12,6 +12,7 @@ import RequestWithUser from 'src/auth/requestWithUser.interface';
 
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
+import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 @Injectable({ scope: Scope.REQUEST })
 export class VehicleService {
   currentUser: any;
@@ -42,14 +43,19 @@ export class VehicleService {
     return user ? user : null;
   }
 
-//   async updateUser(id: string, user: UpdateUserDto) {
-//     await this.vehicleRepository.update(id, user);
+  async update(id: string, user: UpdateVehicleDto) {
+    await this.vehicleRepository.update(id, user);
 
-//     const updatedUser = await this.vehicleRepository.findOne(id);
-//     if (updatedUser) {
-//       return updatedUser;
-//     }
-//     throw new HttpException('user not found', HttpStatus.NOT_FOUND);
-//   }
-
+    const updatedUser = await this.vehicleRepository.findOne(id);
+    if (updatedUser) {
+      return updatedUser;
+    }
+    throw new HttpException('user not found', HttpStatus.NOT_FOUND);
+  }
+  async delete(id: string) {
+    const deletedUser = await this.vehicleRepository.delete(id);
+    if (!deletedUser.affected) {
+      throw new HttpException('user not found', HttpStatus.NOT_FOUND);
+    }
+  }
 }

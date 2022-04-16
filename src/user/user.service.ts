@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
+import { BaseFilerDto } from 'src/shared/model/base.filter.dto';
 
 @Injectable()
 export class UserService {
@@ -24,8 +25,17 @@ export class UserService {
     return newUser;
   }
 
-  getAllUsers() {
-    return this.usersRepository.find();
+  async getAllUsers() {
+    const [items, count] = await this.usersRepository.find(
+      {relations: ['roles'],
+      order:{
+        email:'ASC'
+      }
+    });
+    return {
+      items,
+      count
+    }
   }
 
   async getUserById(id: string) {

@@ -18,6 +18,8 @@ export class AuthService {
   public async register(registrationData: RegisterDto) {
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
     try {
+
+      
       registrationData.password = hashedPassword;
       const createdUser = await this.usersService.create({
         id: null,

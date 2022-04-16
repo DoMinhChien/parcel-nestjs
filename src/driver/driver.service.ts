@@ -28,7 +28,7 @@ export class DriverService {
   }
 
   async findAll() {
-    const allDrivers = await this.driverRepository.find();
+    const allDrivers = await this.driverRepository.find({relations: ['user']});
     return allDrivers ? allDrivers : null;
   }
 
@@ -37,12 +37,12 @@ export class DriverService {
     return allDrivers ? allDrivers : null;
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const driver = await this.driverRepository.findOne(id);
     return driver ? driver : null;
   }
 
-  async update(id: number, updateDriverDto: UpdateDriverDto) {
+  async update(id: string, updateDriverDto: UpdateDriverDto) {
     await this.driverRepository.update(id, updateDriverDto);
     const updatedOrder = await this.driverRepository.findOne(id);
     if (updatedOrder) {
@@ -52,7 +52,7 @@ export class DriverService {
     throw new HttpException('driver not found', HttpStatus.NOT_FOUND);
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     const deletedDriver = await this.driverRepository.delete(id);
     if (!deletedDriver.affected) {
       throw new HttpException('driver not found', HttpStatus.NOT_FOUND);

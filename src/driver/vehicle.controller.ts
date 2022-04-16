@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import JwtAuthenticationGuard from '../auth/jwt-authentication.guard';
 import {LocalAuthenticationGuard }from '../auth/localAuthentication.guard';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
@@ -13,24 +14,24 @@ export class VehicleController {
   create(@Body() createDriverDto: CreateVehicleDto) {
     return this.vehicleService.create(createDriverDto);
   }
-  @UseGuards(LocalAuthenticationGuard)
+  @UseGuards(JwtAuthenticationGuard)
   @Get()
   findAll() {
     return this.vehicleService.getAllVehicles();
   }
-
+  @UseGuards(JwtAuthenticationGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.vehicleService.getVehicleById(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateDriverDto: UpdateDriverDto) {
-  //   return this.vehicleService.update(+id, updateDriverDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateDriverDto: UpdateDriverDto) {
+    return this.vehicleService.update(id, updateDriverDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.vehicleService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.vehicleService.delete(id);
+  }
 }
