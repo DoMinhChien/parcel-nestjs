@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Request } from 'express';
 import { Repository } from 'typeorm/repository/Repository';
+import { v4 as uuidv4 } from 'uuid';
+import { BaseFilerDto } from '../shared/model/base.filter.dto';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
-import { VehicleEntity } from './entities/vehicle.entity';
-import { v4 as uuidv4 } from 'uuid';
 import { DriverEntity } from './entities/driver.entity';
-import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
 @Injectable()
 export class DriverService {
   
@@ -27,8 +27,15 @@ export class DriverService {
     return newDriver;
   }
 
-  async findAll() {
-    const allDrivers = await this.driverRepository.find({relations: ['user']});
+  async getAllDrivers(filter: BaseFilerDto) {
+    const allDrivers = await this.driverRepository.find(
+      {relations: ['user'],
+      take: filter.pageSize,
+      skip: filter.pageNumber
+    
+    }
+    
+      );
     return allDrivers ? allDrivers : null;
   }
 

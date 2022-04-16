@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { BaseFilerDto } from '../shared/model/base.filter.dto';
 import { DriverService } from './driver.service';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
@@ -13,8 +14,8 @@ export class DriverController {
   }
 
   @Get()
-  findAll() {
-    return this.driverService.findAll();
+  getDrivers(@Query() filter :BaseFilerDto) {
+    return this.driverService.getAllDrivers(filter);
   }
 
   @Get(':id')

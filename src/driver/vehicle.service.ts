@@ -1,18 +1,15 @@
-import { HttpException, HttpStatus, Inject,  Injectable, Scope } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, Scope } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Request } from 'express';
 import { Repository } from 'typeorm/repository/Repository';
-import { CreateDriverDto } from './dto/create-driver.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { BaseFilerDto } from '../shared/model/base.filter.dto';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
-import { UpdateDriverDto } from './dto/update-driver.dto';
+import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { VehicleEntity } from './entities/vehicle.entity';
 
-import { v4 as uuidv4 } from 'uuid';
-import { UserEntity } from 'src/user/entities/user.entity';
-import RequestWithUser from 'src/auth/requestWithUser.interface';
 
-import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
-import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 @Injectable({ scope: Scope.REQUEST })
 export class VehicleService {
   currentUser: any;
@@ -33,9 +30,11 @@ export class VehicleService {
      return entity;
   }
 
-  getAllVehicles() {
+  getAllVehicles(filter: BaseFilerDto) {
     console.log(this.currentUser);
-    return this.vehicleRepository.find();
+    return this.vehicleRepository.find({
+      take: filter.pageSize,
+      skip: filter.pageNumber});
   }
 
   async getVehicleById(id: string) {

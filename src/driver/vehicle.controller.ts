@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import JwtAuthenticationGuard from '../auth/jwt-authentication.guard';
-import {LocalAuthenticationGuard }from '../auth/localAuthentication.guard';
-import { CreateDriverDto } from './dto/create-driver.dto';
+import { BaseFilerDto } from '../shared/model/base.filter.dto';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
 import { VehicleService } from './vehicle.service';
@@ -16,8 +15,8 @@ export class VehicleController {
   }
   @UseGuards(JwtAuthenticationGuard)
   @Get()
-  findAll() {
-    return this.vehicleService.getAllVehicles();
+  findAll(@Query() filter :BaseFilerDto) {
+    return this.vehicleService.getAllVehicles(filter);
   }
   @UseGuards(JwtAuthenticationGuard)
   @Get(':id')
