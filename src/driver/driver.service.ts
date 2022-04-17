@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
-import { Repository } from 'typeorm/repository/Repository';
+import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseFilerDto } from '../shared/model/base.filter.dto';
 import { PagedItems } from '../shared/model/paged.items';
@@ -12,10 +12,11 @@ import { UpdateDriverDto } from './dto/update-driver.dto';
 import { DriverEntity } from './entities/driver.entity';
 @Injectable()
 export class DriverService {
-  
-  constructor(  @InjectRepository(DriverEntity)
-  private driverRepository: Repository<DriverEntity>,
-  @Inject(REQUEST) private readonly request: Request) {
+  constructor(
+    @InjectRepository(DriverEntity)
+    private driverRepository: Repository<DriverEntity>,
+    @Inject(REQUEST) private readonly request: Request,
+  ) {
     request.user;
   }
   async create(driverData: CreateDriverDto) {
@@ -29,16 +30,13 @@ export class DriverService {
   }
 
   async getAllDrivers(filter: BaseFilerDto) {
-    const [items, count] = await this.driverRepository.findAndCount(
-      {relations: ['user'],
+    const [items, count] = await this.driverRepository.findAndCount({
+      relations: ['user'],
       take: filter.pageSize,
-      skip: filter.pageNumber
-    
-    }
-    
-      );
-      return new PagedItems(filter.pageSize, filter.pageNumber, items, count);
-    }
+      skip: filter.pageNumber,
+    });
+    return new PagedItems(filter.pageSize, filter.pageNumber, items, count);
+  }
 
   async findByIds(ids: string[]) {
     const allDrivers = await this.driverRepository.findByIds(ids);
@@ -67,9 +65,7 @@ export class DriverService {
     }
   }
 
-
- async createVechile(createVehicleDto : CreateVehicleDto)
-  {
-    return '' ;
+  async createVechile(createVehicleDto: CreateVehicleDto) {
+    return '';
   }
 }

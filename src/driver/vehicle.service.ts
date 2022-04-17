@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Inject, Injectable, Scope } from '@nestjs/co
 import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
-import { Repository } from 'typeorm/repository/Repository';
+import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseFilerDto } from '../shared/model/base.filter.dto';
 import { PagedItems } from '../shared/model/paged.items';
