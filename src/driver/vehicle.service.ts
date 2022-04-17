@@ -2,12 +2,16 @@ import { HttpException, HttpStatus, Inject, Injectable, Scope } from '@nestjs/co
 import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
-import { Repository } from 'typeorm';
+import { Repository } from 'typeorm/repository/Repository';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseFilerDto } from '../shared/model/base.filter.dto';
+import { PagedItems } from '../shared/model/paged.items';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { VehicleEntity } from './entities/vehicle.entity';
+
+
+
 
 
 @Injectable({ scope: Scope.REQUEST })
@@ -30,11 +34,16 @@ export class VehicleService {
      return entity;
   }
 
-  getAllVehicles(filter: BaseFilerDto) {
-    console.log(this.currentUser);
-    return this.vehicleRepository.find({
-      take: filter.pageSize,
-      skip: filter.pageNumber});
+  async getAllVehicles(filter: BaseFilerDto) {
+    const [items, count] = await this.vehicleRepository.findAndCount(
+      {take: filter.pageSize,
+      skip: filter.pageNumber
+    
+    }
+    
+      );
+      return new PagedItems(filter.pageSize, filter.pageNumber, items, count);
+
   }
 
   async getVehicleById(id: string) {

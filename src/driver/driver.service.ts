@@ -2,9 +2,10 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
-import { Repository } from 'typeorm';
+import { Repository } from 'typeorm/repository/Repository';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseFilerDto } from '../shared/model/base.filter.dto';
+import { PagedItems } from '../shared/model/paged.items';
 import { CreateDriverDto } from './dto/create-driver.dto';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
@@ -28,7 +29,7 @@ export class DriverService {
   }
 
   async getAllDrivers(filter: BaseFilerDto) {
-    const allDrivers = await this.driverRepository.find(
+    const [items, count] = await this.driverRepository.findAndCount(
       {relations: ['user'],
       take: filter.pageSize,
       skip: filter.pageNumber
@@ -36,8 +37,8 @@ export class DriverService {
     }
     
       );
-    return allDrivers ? allDrivers : null;
-  }
+      return new PagedItems(filter.pageSize, filter.pageNumber, items, count);
+    }
 
   async findByIds(ids: string[]) {
     const allDrivers = await this.driverRepository.findByIds(ids);
