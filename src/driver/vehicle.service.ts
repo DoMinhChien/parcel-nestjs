@@ -2,13 +2,16 @@ import { HttpException, HttpStatus, Inject, Injectable, Scope } from '@nestjs/co
 import { REQUEST } from '@nestjs/core';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
-import { PagedItems } from '../shared/model/paged.items';
 import { Repository } from 'typeorm/repository/Repository';
 import { v4 as uuidv4 } from 'uuid';
 import { BaseFilerDto } from '../shared/model/base.filter.dto';
+import { PagedItems } from '../shared/model/paged.items';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { VehicleEntity } from './entities/vehicle.entity';
+
+
+
 
 
 @Injectable({ scope: Scope.REQUEST })
