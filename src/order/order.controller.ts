@@ -10,7 +10,6 @@ import {
 import { OrderService, SubOrderService } from './order.service';
 import { CreateOrderDto, CreateSubOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto, UpdateSubOrderDto } from './dto/update-order.dto';
-import { APIResponse } from '../shared/model/api.response';
 
 @Controller('order')
 export class OrderController {
@@ -33,10 +32,7 @@ export class OrderController {
   }
 
   @Patch(':id')
-  async updateOrder(
-    @Param('id') id: string,
-    @Body() order: UpdateOrderDto,
-  ) {
+  async updateOrder(@Param('id') id: string, @Body() order: UpdateOrderDto) {
     return this.orderService.updateOrder(id, order);
   }
 
@@ -46,7 +42,6 @@ export class OrderController {
     this.orderService.deleteOrder(Number(id));
   }
 }
-
 
 @Controller('suborder')
 export class SubOrderController {

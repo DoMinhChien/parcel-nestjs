@@ -18,8 +18,6 @@ export class AuthService {
   public async register(registrationData: RegisterDto) {
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
     try {
-
-      
       registrationData.password = hashedPassword;
       const createdUser = await this.usersService.create({
         id: null,
@@ -44,7 +42,7 @@ export class AuthService {
   public async getAuthenticatedUser(email: string, plainTextPassword: string) {
     try {
       const user = await this.usersService.getByEmail(email);
-       await this.verifyPassword(plainTextPassword, user.password);
+      await this.verifyPassword(plainTextPassword, user.password);
       user.password = undefined;
       return user;
     } catch (error) {
@@ -94,9 +92,8 @@ export class AuthService {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
-      expiresIn: `${this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME')}s`
+      expiresIn: this.configService.get('JWT_REFRESH_TOKEN_EXPIRATION_TIME'),
     });
-    return  token;
+    return token;
   }
-  
 }

@@ -1,4 +1,4 @@
-import { DriverEntity } from "../../driver/entities/driver.entity";
+import { DriverEntity } from '../../driver/entities/driver.entity';
 
 export class CreateOrderDto {
   public id: string;
@@ -17,12 +17,39 @@ export class CreateOrderDto {
   public srcWarehouseId: string;
   public destWarehouseId: string;
   orderData: Promise<DriverEntity[]>;
-  constructor(id: string, status: number, drivers: DriverEntity[], fee: number, isDirectPickup: boolean, isDirectDelivery: boolean,
-    description: string, paymentSide: boolean, paymentStatus: number, totalWeight: number, userId: string, value: number,
-    srcWarehouseId: string, destWarehouseId: string);
-  constructor(id: string, status: number, drivers: DriverEntity[], fee: number, isDirectPickup: boolean, isDirectDelivery: boolean,
-    description: string, paymentSide: boolean, paymentStatus: number, totalWeight: number, userId: string, value: number,
-    srcWarehouseId: string, destWarehouseId: string) {
+
+  constructor(
+    id: string,
+    status: number,
+    drivers: DriverEntity[],
+    fee: number,
+    isDirectPickup: boolean,
+    isDirectDelivery: boolean,
+    description: string,
+    paymentSide: boolean,
+    paymentStatus: number,
+    totalWeight: number,
+    userId: string,
+    value: number,
+    srcWarehouseId: string,
+    destWarehouseId: string,
+  );
+  constructor(
+    id: string,
+    status: number,
+    drivers: DriverEntity[],
+    fee: number,
+    isDirectPickup: boolean,
+    isDirectDelivery: boolean,
+    description: string,
+    paymentSide: boolean,
+    paymentStatus: number,
+    totalWeight: number,
+    userId: string,
+    value: number,
+    srcWarehouseId: string,
+    destWarehouseId: string,
+  ) {
     this.id = id;
     this.status = status;
     this.drivers = drivers;
@@ -46,8 +73,20 @@ export class CreateSubOrderDto {
   public name: string;
   public weight: number;
   public orderId: string;
-  constructor(id: string, status: number, name: string, weight: number, orderId: string);
-  constructor(id: string, status: number, name: string, weight: number, orderId: string) {
+  constructor(
+    id: string,
+    status: number,
+    name: string,
+    weight: number,
+    orderId: string,
+  );
+  constructor(
+    id: string,
+    status: number,
+    name: string,
+    weight: number,
+    orderId: string,
+  ) {
     this.id = id;
     this.status = status;
     this.name = name;
