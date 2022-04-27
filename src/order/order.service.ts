@@ -32,14 +32,14 @@ export class OrderService {
 
   async getAllOrders() {
     const allOrders = await this.ordersRepository.find({
-      relations: ['drivers', 'subOrders']
+      relations: ['drivers', 'subOrders', 'user', 'recipient']
     })
     return allOrders ? allOrders : null;
   }
 
   async getOrderById(id: string) {
     const order = await this.ordersRepository.findOne(id, {
-      relations: ['drivers', 'subOrders']
+      relations: ['drivers', 'subOrders', 'user', 'recipient']
     });
     return order ? order : null;
   }

@@ -9,6 +9,7 @@ import { LoggerMiddleware } from './shared/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
 import { WarehouseModule } from './warehouse/warehouse.module';
 import { DriverModule } from './driver/driver.module';
+import { RecipientModule } from './recipient/recipient.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +34,7 @@ import { DriverModule } from './driver/driver.module';
     UserModule,
     WarehouseModule,
     DriverModule,
+    RecipientModule
   ],
 })
 export class AppModule implements NestModule {

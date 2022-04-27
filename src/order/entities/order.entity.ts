@@ -14,6 +14,7 @@ import {
 import { UserEntity } from '../../user/entities/user.entity';
 import { WarehouseEntity } from '../../warehouse/entities/warehouse.entity';
 import { SubOrderEntity } from './sub-order.entity';
+import { RecipientEntity } from 'src/recipient/entities/recipient.entity';
 
 @Entity('order')
 export class OrderEntity {
@@ -67,6 +68,13 @@ export class OrderEntity {
   @ManyToOne(() => UserEntity, (user) => user.orders)
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
+
+  @Column({nullable: true})
+  recipientId?: string;
+
+  @ManyToOne(() => RecipientEntity, (recipient) => recipient.orders, { nullable: false })
+  @JoinColumn({ name: 'recipientId' })
+  recipient?: RecipientEntity;
 
   @Column('int', { default: 0 })
   value: number;
