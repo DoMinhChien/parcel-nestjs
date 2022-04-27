@@ -50,9 +50,9 @@ export class DriverService {
 
   async update(id: string, updateDriverDto: UpdateDriverDto) {
     await this.driverRepository.update(id, updateDriverDto);
-    const updatedOrder = await this.driverRepository.findOne(id);
-    if (updatedOrder) {
-      return updatedOrder;
+    const updatedDriver = await this.driverRepository.findOne(id);
+    if (updatedDriver) {
+      return updatedDriver;
     }
 
     throw new HttpException('driver not found', HttpStatus.NOT_FOUND);
@@ -63,9 +63,5 @@ export class DriverService {
     if (!deletedDriver.affected) {
       throw new HttpException('driver not found', HttpStatus.NOT_FOUND);
     }
-  }
-
-  async createVechile(createVehicleDto: CreateVehicleDto) {
-    return '';
   }
 }
