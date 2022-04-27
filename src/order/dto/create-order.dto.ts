@@ -13,6 +13,7 @@ export class CreateOrderDto {
   public paymentStatus: number;
   public totalWeight: number;
   public userId: string;
+  public recipientId: string;
   public value: number;
   public srcWarehouseId: string;
   public destWarehouseId: string;
@@ -30,6 +31,7 @@ export class CreateOrderDto {
     paymentStatus: number,
     totalWeight: number,
     userId: string,
+    recipientId: string,
     value: number,
     srcWarehouseId: string,
     destWarehouseId: string,
@@ -46,6 +48,7 @@ export class CreateOrderDto {
     paymentStatus: number,
     totalWeight: number,
     userId: string,
+    recipientId: string,
     value: number,
     srcWarehouseId: string,
     destWarehouseId: string,
@@ -61,6 +64,7 @@ export class CreateOrderDto {
     this.paymentStatus = paymentStatus;
     this.totalWeight = totalWeight;
     this.userId = userId;
+    this.recipientId = recipientId;
     this.value = value;
     this.srcWarehouseId = srcWarehouseId;
     this.destWarehouseId = destWarehouseId;
